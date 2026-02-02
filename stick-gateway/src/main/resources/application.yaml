@@ -1,0 +1,75 @@
+server:
+  port: 8080
+
+spring:
+  cloud:
+    gateway:
+      discovery:
+        locator:
+          enabled: true
+          lower-case-service-id: true
+      routes:
+        - id: stick-user-service
+          uri: lb://stick-user-service
+          predicates:
+            - Path=/api/user/**
+          filters:
+            - StripPrefix=2
+
+        - id: stick-post-service
+          uri: lb://stick-content-service
+          predicates:
+            - Path=/api/post/**
+          filters:
+            - StripPrefix=2
+
+        - id: stick-topic-service
+          uri: lb://stick-content-service
+          predicates:
+            - Path=/api/topic/**
+          filters:
+            - StripPrefix=2
+
+        - id: stick-mail-service
+          uri: lb://stick-content-service
+          predicates:
+            - Path=/api/mail/**
+          filters:
+            - StripPrefix=2
+
+        - id: stick-stick-service
+          uri: lb://stick-stick-service
+          predicates:
+            - Path=/api/stick/**
+          filters:
+            - StripPrefix=2
+
+        - id: stick-divination-service
+          uri: lb://stick-divination-service
+          predicates:
+            - Path=/api/divination/**
+          filters:
+            - StripPrefix=2
+
+        - id: stick-search-service
+          uri: lb://stick-search-service
+          predicates:
+            - Path=/api/search/**
+          filters:
+            - StripPrefix=2
+
+        - id: stick-upload-service
+          uri: lb://stick-upload-service
+          predicates:
+            - Path=/api/upload/**
+          filters:
+            - StripPrefix=2
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+  endpoint:
+    health:
+      show-details: always

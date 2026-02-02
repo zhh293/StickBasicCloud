@@ -1,0 +1,32 @@
+server:
+  port: 8090
+
+spring:
+  data:
+    redis:
+      host: ${SPRING_DATA_REDIS_HOST:localhost}
+      port: ${SPRING_DATA_REDIS_PORT:6379}
+      lettuce:
+        pool:
+          enabled: true
+          max-active: 10
+          max-idle: 10
+          min-idle: 0
+
+dubbo:
+  application:
+    name: stick-search-service
+  protocol:
+    name: dubbo
+    port: 20890
+  registry:
+    address: nacos://${NACOS_HOST:localhost}:8848
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+  endpoint:
+    health:
+      show-details: always
