@@ -18,7 +18,10 @@ import java.io.IOException;
 public class AuthenticationHandler implements AuthenticationEntryPoint {
     @Override
     public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException authException) throws IOException, ServletException {
-
+        Result objectResult = Result.success(HttpStatus.UNAUTHORIZED.value());
+        String jsonString = JSON.toJSONString(objectResult);
+        //处理异常
+        WebUtils.renderString(response,jsonString );
     }
 //    @Override
 //    public void commence(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, AuthenticationException e) throws IOException {

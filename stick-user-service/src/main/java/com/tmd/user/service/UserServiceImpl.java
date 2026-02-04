@@ -7,7 +7,9 @@ import com.tmd.api.user.UserDubboService;
 import com.tmd.common.config.RedisCache;
 import com.tmd.common.entity.dto.UserProfile;
 import com.tmd.common.entity.dto.UserUpdateDTO;
+import com.tmd.common.entity.po.LoginUser;
 import com.tmd.common.entity.po.UserData;
+import com.tmd.common.util.JwtUtil;
 import com.tmd.user.mapper.UserMapper;
 import com.tmd.user.publisher.MessageProducer;
 import lombok.extern.slf4j.Slf4j;
@@ -15,13 +17,20 @@ import org.apache.dubbo.config.annotation.DubboService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.util.StringUtils;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 @DubboService
 @Slf4j
-public class UserServiceImpl implements UserDubboService , UserDetailsService {
+public class UserServiceImpl implements UserDubboService , UserDetailsService{
     @Autowired
     private AuthenticationManager authenticationManager;
 
@@ -37,12 +46,33 @@ public class UserServiceImpl implements UserDubboService , UserDetailsService {
 
     @Override
     public boolean register(UserData userData) {
+        if(userMapper.findByUsername(userData) == null)
+        {
+            userMapper.register(userData);
+            return true;
+        }
         return false;
     }
 
     @Override
     public UserData login(UserData userData) {
-        return null;
+        Authentication authenticate = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(userData.getUsername(), userData.getPassword()));
+        if(authenticate==null){
+            throw new RuntimeException("用户名或密码错误");
+        }
+        Object principal = authenticate.getPrincipal();
+        LoginUser loginUser = (LoginUser) principal;
+        //生成jwt令牌，并且存入Redis中
+        Map<String,Long> map=new HashMap<>();
+        map.put("id",loginUser.getUser().getId());
+        String jwt = JwtUtil.makeToken(userData.getId());
+        userData.setToken(jwt);
+        redisCache.setCacheObject("login:"+jwt,loginUser);
+        UserData user = loginUser.getUser();
+        user.setToken(jwt);
+        user.setId(user.getId());
+        log.info("用户登陆成功{}",user);
+        return user;
     }
 
     @Override
@@ -111,5 +141,19 @@ public class UserServiceImpl implements UserDubboService , UserDetailsService {
             log.error("软删除用户失败: userId={}", userId, e);
             return false;
         }
+    }
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        log.info("[用户登录] 尝试登录用户: {}", username);
+        //开始匹配并且放入
+        if(!StringUtils.hasText(username)){
+            throw new UsernameNotFoundException("不要填空值");
+        }
+        UserData user = userMapper.check(username);
+        if(user==null){
+            throw new UsernameNotFoundException("用户不存在");
+        }
+        LoginUser loginUser = new LoginUser(user);
+        return loginUser;
     }
 }

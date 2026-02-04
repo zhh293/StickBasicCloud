@@ -3,8 +3,9 @@ package com.tmd.common.util;
 
 
 
-import jakarta.servlet.http.HttpServletResponse;
 
+
+import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 public class WebUtils
