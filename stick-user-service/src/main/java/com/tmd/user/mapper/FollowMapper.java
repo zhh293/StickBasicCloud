@@ -1,6 +1,7 @@
 package com.tmd.user.mapper;
 
-import com.tmd.entity.po.Follow;
+
+import com.tmd.common.entity.po.Follow;
 import org.apache.ibatis.annotations.*;
 
 import java.util.List;
