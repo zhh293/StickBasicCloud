@@ -35,6 +35,9 @@ dubbo:
     port: -1
   registry:
     address: nacos://${NACOS_HOST:localhost}:8848
+    parameters:
+      namespace: dev
+      group: TOTAL_GROUP
 
 Bluegod:
   security:
