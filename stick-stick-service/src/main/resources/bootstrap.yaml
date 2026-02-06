@@ -5,10 +5,10 @@ spring:
     nacos:
       discovery:
         server-addr: ${NACOS_HOST:localhost}:8848
-        namespace: ${NACOS_NAMESPACE:}
-        group: ${NACOS_GROUP:DEFAULT_GROUP}
+        namespace: ${NACOS_NAMESPACE:dev}
+        group: ${NACOS_GROUP:STICK_GROUP}
       config:
         server-addr: ${NACOS_HOST:localhost}:8848
-        namespace: ${NACOS_NAMESPACE:}
-        group: ${NACOS_GROUP:DEFAULT_GROUP}
+        namespace: ${NACOS_NAMESPACE:dev}
+        group: ${NACOS_GROUP:STICK_GROUP}
         file-extension: yaml
