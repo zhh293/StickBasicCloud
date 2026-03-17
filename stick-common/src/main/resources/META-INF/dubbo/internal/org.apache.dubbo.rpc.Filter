@@ -1,0 +1,2 @@
+userContextConsumer=com.tmd.common.dubbo.UserContextConsumerFilter
+userContextProvider=com.tmd.common.dubbo.UserContextProviderFilter

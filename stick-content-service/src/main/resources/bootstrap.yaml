@@ -6,9 +6,9 @@ spring:
       discovery:
         server-addr: ${NACOS_HOST:localhost}:8848
         namespace: ${NACOS_NAMESPACE:}
-        group: ${NACOS_GROUP:DEFAULT_GROUP}
+        group: ${NACOS_GROUP:TOTAL_GROUP}
       config:
         server-addr: ${NACOS_HOST:localhost}:8848
         namespace: ${NACOS_NAMESPACE:}
-        group: ${NACOS_GROUP:DEFAULT_GROUP}
+        group: ${NACOS_GROUP:CONTENT_GROUP}
         file-extension: yaml

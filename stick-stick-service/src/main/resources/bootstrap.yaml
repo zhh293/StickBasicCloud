@@ -6,7 +6,7 @@ spring:
       discovery:
         server-addr: ${NACOS_HOST:localhost}:8848
         namespace: ${NACOS_NAMESPACE:dev}
-        group: ${NACOS_GROUP:STICK_GROUP}
+        group: ${NACOS_GROUP:TOTAL_GROUP}
       config:
         server-addr: ${NACOS_HOST:localhost}:8848
         namespace: ${NACOS_NAMESPACE:dev}

@@ -1,6 +1,7 @@
 package com.tmd.common.config;
 
 //import com.tmd.common.filter.JwtAuthenticationTokenFilter;
+import com.tmd.common.filter.UserContextHeaderFilter;
 import com.tmd.common.properties.AliOssProperties;
 import com.tmd.common.properties.MailProperties;
 import com.tmd.common.properties.WechatPayProperties;
@@ -40,6 +41,7 @@ import org.springframework.context.annotation.Import;
         // === 核心组件 ===
         RedisCache.class, // 位于config包下但实际是工具组件
         // JwtAuthenticationTokenFilter.class, // 移除过滤器自动配置，交由各服务自行配置
+        UserContextHeaderFilter.class,
 
         // === 属性配置 === 属性配置 ===
         AliOssProperties.class,
