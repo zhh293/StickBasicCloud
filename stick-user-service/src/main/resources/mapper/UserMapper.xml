@@ -1,0 +1,33 @@
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tmd.user.mapper.UserMapper">
+
+    <select id="findByUserIdAndPassword" resultType="com.tmd.common.entity.po.UserData">
+        select * from users where id=#{uid} and password=#{oldPassword}
+    </select>
+
+    <update id="update">
+        update users
+        <set>
+            <if test="userUpdateDTO.homepageBackground != null">
+                homepage_background = #{userUpdateDTO.homepageBackground},
+            </if>
+            <if test="userUpdateDTO.personalSignature != null">
+                personal_signature = #{userUpdateDTO.personalSignature},
+            </if>
+            <if test="userUpdateDTO.avatar != null">
+                avatar = #{userUpdateDTO.avatar},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <update id="updatePassword">
+        update users set password=#{newPassword} where id=#{uid} and password=#{oldPassword}
+    </update>
+
+    <update id="softDelete">
+        update users set deleted_at = CURRENT_TIMESTAMP where id = #{userId} and deleted_at is null
+    </update>
+</mapper>

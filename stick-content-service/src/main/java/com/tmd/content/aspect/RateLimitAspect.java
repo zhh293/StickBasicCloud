@@ -1,8 +1,7 @@
-package com.tmd.search.aspect;
+package com.tmd.content.aspect;
 
 import com.tmd.common.domain.Result;
 import com.tmd.common.util.BaseContext;
-
 import lombok.RequiredArgsConstructor;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
@@ -43,7 +42,7 @@ public class RateLimitAspect {
                         "return allowed;");
     }
 
-    @Around("@annotation(com.tmd.search.aspect.RateLimit)")
+    @Around("@annotation(com.tmd.content.aspect.RateLimit)")
     public Object limit(ProceedingJoinPoint pjp) throws Throwable {
         MethodSignature ms = (MethodSignature) pjp.getSignature();
         Method m = ms.getMethod();
