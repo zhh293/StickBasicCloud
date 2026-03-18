@@ -12,6 +12,16 @@ spring:
           max-active: 10
           max-idle: 10
           min-idle: 0
+  rabbitmq:
+    virtual-host: /
+    username: admin
+    password: admin123456
+    host: ${SPRING_RABBITMQ_HOST:localhost}
+    port: ${SPRING_RABBITMQ_PORT:5672}
+  ai:
+    openai:
+      api-key: ${OPENAI_API_KEY}
+      base-url: https://api.xty.app
 
 sky:
   alioss:
@@ -25,7 +35,7 @@ dubbo:
     name: stick-upload-service
   protocol:
     name: dubbo
-    port: 20891
+    port: -1
   registry:
     address: nacos://${NACOS_HOST:localhost}:8848
     parameters:

@@ -36,7 +36,7 @@ dubbo:
     name: stick-divination-service
   protocol:
     name: dubbo
-    port: 20889
+    port: -1
   registry:
     address: nacos://${NACOS_HOST:localhost}:8848
     parameters:

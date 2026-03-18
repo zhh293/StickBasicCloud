@@ -10,7 +10,6 @@ import com.tmd.common.repository.LocalPdfFileRepository;
 import com.tmd.common.util.JwtUtil;
 import com.tmd.common.util.NeedTools;
 import com.tmd.common.util.RedisIdWorker;
-import com.tmd.common.util.SimpleTools;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 
@@ -56,7 +55,6 @@ import org.springframework.context.annotation.Import;
         JwtUtil.class,
         NeedTools.class,
         RedisIdWorker.class,
-        SimpleTools.class
 })
 public class StickCommonAutoConfiguration {
 }

@@ -18,7 +18,7 @@ dubbo:
     name: stick-search-service
   protocol:
     name: dubbo
-    port: 20890
+    port: -1
   registry:
     address: nacos://${NACOS_HOST:localhost}:8848
     parameters:

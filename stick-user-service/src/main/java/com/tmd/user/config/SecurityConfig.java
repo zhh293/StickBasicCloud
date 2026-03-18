@@ -17,10 +17,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.access.AccessDeniedHandler;
-import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 @Configuration
@@ -88,7 +86,7 @@ public class SecurityConfig {
     public AuthenticationEntryPoint authenticationEntryPoint() {
         return new AuthenticationEntryPoint() {
             @Override
-            public void commence(javax.servlet.http.HttpServletRequest request, javax.servlet.http.HttpServletResponse response,
+            public void commence(HttpServletRequest request, HttpServletResponse response,
                                  AuthenticationException authException) throws IOException {
                 // 自定义认证失败处理逻辑
                 response.setStatus(HttpStatus.UNAUTHORIZED.value());

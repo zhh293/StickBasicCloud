@@ -16,12 +16,12 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.dubbo.config.annotation.DubboService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.StringRedisTemplate;
-import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.util.StringUtils;
 
 import java.util.HashMap;
@@ -32,7 +32,7 @@ import java.util.concurrent.TimeUnit;
 @Slf4j
 public class UserServiceImpl implements UserDubboService , UserDetailsService{
     @Autowired
-    private AuthenticationManager authenticationManager;
+    private ObjectProvider<org.springframework.security.authentication.AuthenticationManager> authenticationManagerProvider;
 
     @Autowired
     private RedisCache redisCache;
@@ -56,7 +56,8 @@ public class UserServiceImpl implements UserDubboService , UserDetailsService{
 
     @Override
     public UserData login(UserData userData) {
-        Authentication authenticate = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(userData.getUsername(), userData.getPassword()));
+        Authentication authenticate = authenticationManagerProvider.getObject()
+                .authenticate(new UsernamePasswordAuthenticationToken(userData.getUsername(), userData.getPassword()));
         if(authenticate==null){
             throw new RuntimeException("用户名或密码错误");
         }
