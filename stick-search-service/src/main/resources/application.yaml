@@ -16,6 +16,10 @@ spring:
 dubbo:
   application:
     name: stick-search-service
+  consumer:
+    check: false
+  reference:
+    check: false
   protocol:
     name: dubbo
     port: -1

@@ -33,6 +33,10 @@ sky:
 dubbo:
   application:
     name: stick-upload-service
+  consumer:
+    check: false
+  reference:
+    check: false
   protocol:
     name: dubbo
     port: -1

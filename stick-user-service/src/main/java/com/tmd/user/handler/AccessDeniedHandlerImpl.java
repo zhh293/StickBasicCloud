@@ -21,7 +21,7 @@ public class AccessDeniedHandlerImpl implements AccessDeniedHandler {
         Result objectResult = Result.success(HttpStatus.FORBIDDEN.value());
         String jsonString = JSON.toJSONString(objectResult);
         //处理异常
-        WebUtils.renderString((javax.servlet.http.HttpServletResponse) response,jsonString );
+        WebUtils.renderString(response, jsonString);
     }
 //    @Override
 //    public void handle(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, AccessDeniedException e) throws IOException, ServletException {

@@ -34,6 +34,10 @@ pagehelper:
 dubbo:
   application:
     name: stick-divination-service
+  consumer:
+    check: false
+  reference:
+    check: false
   protocol:
     name: dubbo
     port: -1

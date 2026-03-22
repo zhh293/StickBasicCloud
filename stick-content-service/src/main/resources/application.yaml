@@ -40,6 +40,10 @@ pagehelper:
 dubbo:
   application:
     name: stick-content-service
+  consumer:
+    check: false
+  reference:
+    check: false
   protocol:
     name: dubbo
     port: -1
